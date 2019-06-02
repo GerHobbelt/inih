@@ -5,7 +5,7 @@
  * @date 02.06.2019
  */
 
-#include "INIReaderVec.h"
+#include "./INIReaderVec.h"
 #include <algorithm>
 #include <regex>
 

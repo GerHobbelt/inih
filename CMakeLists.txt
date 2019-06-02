@@ -10,7 +10,6 @@ set(CMAKE_CXX_USE_RESPONSE_FILE_FOR_INCLUDES 0)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # include directories
-file(GLOB include_directories "${CMAKE_CURRENT_SOURCE_DIR}/cpp")
 include_directories(BEFORE CMAKE_CURRENT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/cpp")
 
 # test extended classes

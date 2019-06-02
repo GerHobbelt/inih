@@ -8,7 +8,7 @@
 #ifndef INIREADERVEC_H_
 #define INIREADERVEC_H_
 
-#include <INIReader.h>
+#include "./INIReader.h"
 #include <string>
 #include <vector>
 

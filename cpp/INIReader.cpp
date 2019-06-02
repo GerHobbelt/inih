@@ -18,6 +18,10 @@ INIReader::INIReader(const string& filename)
     _error = ini_parse(filename.c_str(), ValueHandler, this);
 }
 
+INIReader::~INIReader() {
+    
+}
+
 int INIReader::ParseError() const
 {
     return _error;

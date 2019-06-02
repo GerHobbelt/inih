@@ -1,3 +1,52 @@
+Based on https://github.com/benhoyt/inih (release r44).
+# Version of inih that supports vectors
+support vectors of string, integer, boolean, and real. The fork extends the class INIReader by inih::extended::INIReaderVec.
+
+For example:
+```ini
+real_array = [0.0, 1.1, -1.1]
+integer_array = [0, 1, -1]
+boolean_array = [false, true]
+string_array = [hello, array]
+
+real_array = [1.1, false, 3.3] # the none real values will be discarded. returns [1.1, 3.3]
+boolean_array = [hello, true, world] # the none boolean values will be discarded. returns [true]
+real_array = not an array # returns empty array [] 
+# if the requested variable or section do not exist, an empty array is returned.
+```
+```cpp
+#include <INIReaderVec.h>
+#include <iostream>
+
+template <typename T>
+void printVector(const std::vector<T>& vec) {
+    std::cout << "vector: [";
+    for (auto iter = vec.begin(); iter != vec.end(); ++iter) {
+        std::cout << *iter << ((iter < vec.end() - 1) ? ", " : "");
+    }
+    std::cout << "]" << std::endl;
+}
+
+int main(int argc, char const* argv[]) {
+    inih::extended::INIReaderVec reader("./vector_test.ini");
+
+    auto boolVector = reader.GetBooleanVector("vector", "boolean");
+    printVector(boolVector);
+
+    auto intVector = reader.GetIntegerVector("vector", "integer");
+    printVector(intVector);
+
+    auto doubleVector = reader.GetRealVector("vector", "real");
+    printVector(doubleVector);
+
+    auto stringVector = reader.GetStringVector("vector", "string");
+    printVector(stringVector);
+
+    return 0;
+}
+```
+
+
 # inih (INI Not Invented Here)
 
 [![TravisCI Build](https://travis-ci.org/benhoyt/inih.svg)](https://travis-ci.org/benhoyt/inih)

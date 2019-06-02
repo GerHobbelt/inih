@@ -12,10 +12,16 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # include directories
 include_directories(BEFORE CMAKE_CURRENT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/cpp")
 
-# test extended classes
-file(GLOB source_files "${CMAKE_CURRENT_SOURCE_DIR}/cpp/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/ini.c" "${CMAKE_CURRENT_SOURCE_DIR}/tests/vector_test.cpp")
-add_executable(vector_test.app ${source_files}) 
+file(GLOB source_files "${CMAKE_CURRENT_SOURCE_DIR}/*.c" "${CMAKE_CURRENT_SOURCE_DIR}/cpp/*.cpp")
+if(BUILD_SHARED_LIBS)
+    add_library(inih SHARED ${source_files})
+else() 
+    add_library(inih STATIC ${source_files})
+endif()
 
-# copy resources
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests/vector_test.ini" "${CMAKE_CURRENT_BINARY_DIR}/vector_test.ini" COPYONLY)
+# test extended classes
+# file(GLOB source_files "${CMAKE_CURRENT_SOURCE_DIR}/cpp/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/ini.c" "${CMAKE_CURRENT_SOURCE_DIR}/tests/vector_test.cpp")
+# add_executable(vector_test.app ${source_files}) 
+# # copy resources
+# configure_file("${CMAKE_CURRENT_SOURCE_DIR}/tests/vector_test.ini" "${CMAKE_CURRENT_BINARY_DIR}/vector_test.ini" COPYONLY)
 

@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <cctype>
 #include <cstdlib>
+
 #include "../ini.h"
 #include "INIReader.h"
 
@@ -91,6 +92,15 @@ double INIReader::GetReal(const string& section, const string& name, double defa
     const char* value = valstr.c_str();
     char* end;
     double n = strtod(value, &end);
+    return end > value ? n : default_value;
+}
+
+float INIReader::GetFloat(const string& section, const string& name, float default_value) const
+{
+    string valstr = Get(section, name, "");
+    const char* value = valstr.c_str();
+    char* end;
+    float n = strtof(value, &end);
     return end > value ? n : default_value;
 }
 

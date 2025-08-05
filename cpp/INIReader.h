@@ -86,6 +86,11 @@ public:
     // according to strtod().
     INI_API double GetReal(const std::string& section, const std::string& name, double default_value) const;
 
+    // Get a single precision floating point number value from INI file, returning
+    // default_value if not found or not a valid floating point value
+    // according to strtof().
+    INI_API float GetFloat(const std::string& section, const std::string& name, float default_value) const;
+  
     // Get a boolean value from INI file, returning default_value if not found or if
     // not a valid true/false value. Valid true values are "true", "yes", "on", "1",
     // and valid false values are "false", "no", "off", "0" (not case sensitive).
@@ -107,6 +112,7 @@ public:
 protected:
     int _error;
     std::map<std::string, std::string> _values;
+
     static std::string MakeKey(const std::string& section, const std::string& name);
     static int ValueHandler(void* user, const char* section, const char* name,
                             const char* value);

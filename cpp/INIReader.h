@@ -2,7 +2,7 @@
 
 // SPDX-License-Identifier: BSD-3-Clause
 
-// Copyright (C) 2009-2020, Ben Hoyt
+// Copyright (C) 2009-2025, Ben Hoyt
 
 // inih and INIReader are released under the New BSD license (see LICENSE.txt).
 // Go to the project home page for more info:
@@ -53,8 +53,13 @@ public:
     INI_API explicit INIReader(const char *buffer, size_t buffer_size);
 
     // Return the result of ini_parse(), i.e., 0 on success, line number of
-    // first error on parse error, or -1 on file open error.
+    // first error on parse error, -1 on file open error, or -2 if there was a
+    // memory allocation error.
     INI_API int ParseError() const;
+
+    // Return a message that describes the type of error that occurred.
+    // It will return "" (empty string) if there was no error.
+    INI_API std::string ParseErrorMessage() const;
 
     // Get a string value from INI file, returning default_value if not found.
     INI_API std::string Get(const std::string& section, const std::string& name,

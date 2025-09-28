@@ -2,7 +2,7 @@
 
 // SPDX-License-Identifier: BSD-3-Clause
 
-// Copyright (C) 2009-2020, Ben Hoyt
+// Copyright (C) 2009-2025, Ben Hoyt
 
 // inih and INIReader are released under the New BSD license (see LICENSE.txt).
 // Go to the project home page for more info:
@@ -31,6 +31,33 @@ INIReader::INIReader(const char *buffer, size_t buffer_size)
 int INIReader::ParseError() const
 {
     return _error;
+}
+
+string INIReader::ParseErrorMessage() const
+{
+    // If _error is positive it means it is the line number on which a parse
+    // error occurred. This could be an overlong line, that ValueHandler
+    // indicated a user defined error, an unterminated section name, or a name
+    // without a value.
+    if (_error > 0) {
+        return "parse error on line " + std::to_string(_error) + "; missing ']' or '='?";
+    }
+
+    // If _error is negative it is a system type error, and 0 means success.
+    switch (_error) {
+    case -2:
+        return "unable to allocate memory";
+
+    case -1:
+        return "unable to open file";
+
+    case 0:
+        return "";
+    }
+
+    // This should never be reached. It probably means a new error code was
+    // added to the C API without updating this method.
+    return "unknown error " + std::to_string(_error);
 }
 
 string INIReader::Get(const string& section, const string& name, const string& default_value) const
